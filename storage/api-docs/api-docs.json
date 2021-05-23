@@ -1,0 +1,1025 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Project_Alan API documentation example",
+        "contact": {
+            "email": "aldaberdiev99@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api",
+            "description": "Laravel Swagger API server"
+        }
+    ],
+    "paths": {
+        "/actions": {
+            "get": {
+                "tags": [
+                    "Actions"
+                ],
+                "summary": "Get list of actions",
+                "description": "Returns list of actions",
+                "operationId": "getActionsList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActionResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/banners": {
+            "get": {
+                "tags": [
+                    "Banners"
+                ],
+                "summary": "Display all Banners",
+                "operationId": "bannersAll",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BannerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Fot Found"
+                    }
+                }
+            }
+        },
+        "/get-cart": {
+            "get": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Get list of 'products' and 'actions' from Cart",
+                "description": "Returns list of 'products' and 'actions' from Cart",
+                "operationId": "getCartList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CartResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/add-to-cart": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Store product",
+                "description": "Add products to the cart.The type field must be 'action' or 'product'",
+                "operationId": "storeProductsToCart",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreCartRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "'Action successfully added' or 'Product successfully added'"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/remove-from-cart": {
+            "delete": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Delete existing product from Cart",
+                "description": "Deletes a product",
+                "operationId": "deleteProduct",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteCartRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "'Action successfully removed' or 'Product successfully removed'"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get list of categories",
+                "description": "Returns list of categories",
+                "operationId": "getCategoriesList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CategoryResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/categories/{slug}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get categories products by SLUG",
+                "operationId": "categoriesProducts",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "The SLUG of category",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Category_slug_1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Everything is fine",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get list of orders",
+                "description": "Returns list of orders",
+                "operationId": "getOrdersList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Store orders",
+                "description": "Store ordered product",
+                "operationId": "store orders",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreOrderRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get list of products",
+                "description": "Returns list of products",
+                "operationId": "getProductsList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ActionResource": {
+                "title": "ActionResource",
+                "description": "Action resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Action"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ActionResource"
+                }
+            },
+            "BannerResource": {
+                "title": "BannerResource",
+                "description": "Banner resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Banner"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "BannerResource"
+                }
+            },
+            "CartResource": {
+                "title": "CartResource",
+                "description": "Cart resource",
+                "properties": {
+                    "products": {
+                        "title": "Products",
+                        "description": "Products wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CartProduct"
+                        }
+                    },
+                    "actions": {
+                        "title": "Actions",
+                        "description": "Actions wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CartAction"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "CartResource"
+                }
+            },
+            "CategoryResource": {
+                "title": "CategoryResource",
+                "description": "Category resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Category"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "CategoryResource"
+                }
+            },
+            "OrderResource": {
+                "title": "OrderRResource",
+                "description": "Order resource",
+                "properties": {
+                    "data": {
+                        "title": "Orders",
+                        "description": "Orders wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "OrderRResource"
+                }
+            },
+            "ProductResource": {
+                "title": "ProductResource",
+                "description": "Product resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ProductResource"
+                }
+            },
+            "DeleteCartRequest": {
+                "title": "Delete Cart request",
+                "description": "Delete Cart request body data",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "type": {
+                        "title": "type",
+                        "description": "Type",
+                        "type": "integer",
+                        "format": "string",
+                        "example": "action"
+                    }
+                },
+                "type": "object"
+            },
+            "Action": {
+                "title": "Action",
+                "description": "Action model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "price": {
+                        "title": "Price",
+                        "description": "Price of the new Action",
+                        "type": "integer",
+                        "example": "60"
+                    },
+                    "title": {
+                        "title": "Title",
+                        "description": "Title of the new action",
+                        "type": "string",
+                        "example": "This is new action's title"
+                    },
+                    "photo": {
+                        "title": "Photo",
+                        "description": "Photo of the new action",
+                        "type": "string",
+                        "example": "http://DoolatKrasavchik.png"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "products": {
+                        "title": "Products",
+                        "description": "Action product's models",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ActionProduct"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Action"
+                }
+            },
+            "ActionProduct": {
+                "title": "Product",
+                "description": "Product model",
+                "properties": {
+                    "quantity": {
+                        "title": "Quantity",
+                        "description": "Quantity of the new product",
+                        "type": "integer",
+                        "example": "3"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new product",
+                        "type": "string",
+                        "example": "Banana"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Product"
+                }
+            },
+            "Banner": {
+                "title": "Banner",
+                "description": "Banner model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the new banner",
+                        "type": "string",
+                        "example": "This is new banner's description"
+                    },
+                    "title": {
+                        "title": "Title",
+                        "description": "Title of the new banner",
+                        "type": "string",
+                        "example": "This is new banner's title"
+                    },
+                    "photo": {
+                        "title": "Photo",
+                        "description": "Photo of the new banner",
+                        "type": "string",
+                        "example": "This is new banner's photo"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Banner"
+                }
+            },
+            "CartAction": {
+                "title": "CartAction",
+                "description": "Cart action model",
+                "properties": {
+                    "quantity": {
+                        "title": "Quantity",
+                        "description": "Quantity of the action",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "price": {
+                        "title": "Price",
+                        "description": "Price of the action",
+                        "type": "integer",
+                        "example": "420"
+                    },
+                    "name": {
+                        "title": "Title",
+                        "description": "Title of the action",
+                        "type": "string",
+                        "example": "About action"
+                    },
+                    "photo": {
+                        "title": "Photo",
+                        "description": "Photo of the action",
+                        "type": "string",
+                        "example": "http://photOfDoolat.png"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "CartAction"
+                }
+            },
+            "CartProduct": {
+                "title": "CartProduct",
+                "description": "Cart product model",
+                "properties": {
+                    "quantity": {
+                        "title": "Quantity",
+                        "description": "Quantity of the product",
+                        "type": "integer",
+                        "example": "3"
+                    },
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the product",
+                        "type": "string",
+                        "example": "Banana"
+                    },
+                    "price": {
+                        "title": "Price",
+                        "description": "Price of the product",
+                        "type": "integer",
+                        "example": "60"
+                    },
+                    "photo": {
+                        "title": "Photo",
+                        "description": "Photo of the product",
+                        "type": "string",
+                        "example": "http://photOfDoolat.png"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "CartProduct"
+                }
+            },
+            "Category": {
+                "title": "Category",
+                "description": "Category model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new category",
+                        "type": "string",
+                        "example": "Fruits"
+                    },
+                    "slug": {
+                        "title": "Slug",
+                        "description": "Slug of the category",
+                        "type": "string",
+                        "example": "This is new categories slug"
+                    },
+                    "photo": {
+                        "title": "Photo",
+                        "description": "Photo of the new category",
+                        "type": "string",
+                        "example": "http://DoolatKrasavchik.png"
+                    },
+                    "category_icon": {
+                        "title": "Category_Icon",
+                        "description": "Icon of the new category",
+                        "type": "string",
+                        "example": "http://DoolatKrasavchik.png"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Category"
+                }
+            },
+            "Order": {
+                "title": "Order",
+                "description": "Order model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "address": {
+                        "title": "address",
+                        "description": "address",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Ahunbaeva,Mira"
+                    },
+                    "phone": {
+                        "title": "phone",
+                        "description": "Phone number",
+                        "type": "string",
+                        "format": "string",
+                        "example": "0777152350"
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "Status",
+                        "type": "string",
+                        "format": "string",
+                        "example": "delivered"
+                    },
+                    "additonal_information": {
+                        "title": "Info",
+                        "description": "Additional information",
+                        "type": "string",
+                        "format": "string",
+                        "example": "additional information"
+                    },
+                    "total_price": {
+                        "title": "total_price",
+                        "description": "Total price",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 600
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "products": {
+                        "title": "Products",
+                        "description": "Products wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CartProduct"
+                        }
+                    },
+                    "actions": {
+                        "title": "Actions",
+                        "description": "Actions wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CartAction"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Order"
+                }
+            },
+            "Product": {
+                "title": "Product",
+                "description": "Product model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new product",
+                        "type": "string",
+                        "example": "Banana"
+                    },
+                    "price": {
+                        "title": "Price",
+                        "description": "Price of the new product",
+                        "type": "integer",
+                        "example": "60"
+                    },
+                    "photo": {
+                        "title": "Photo",
+                        "description": "Photo of the new product",
+                        "type": "string",
+                        "example": "http://Doolat.png"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Product"
+                }
+            },
+            "OrderActionRequest": {
+                "title": "Store Order actions request. ",
+                "description": "Store order actions request body data",
+                "required": [
+                    "id",
+                    "quantity"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the  'action'",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "quantity": {
+                        "title": "quantity",
+                        "description": "Quantity of the 'action'",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 3
+                    }
+                },
+                "type": "object"
+            },
+            "OrderProductRequest": {
+                "title": "Store order pruduct request. ",
+                "description": "Store order product request body data",
+                "required": [
+                    "id",
+                    "quantity"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the 'product'",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "quantity": {
+                        "title": "quantity",
+                        "description": "Quantity of the 'product'",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 3
+                    }
+                },
+                "type": "object"
+            },
+            "StoreCartRequest": {
+                "title": "Store Cart request. ",
+                "description": "Store Cart request body data",
+                "required": [
+                    "id",
+                    "quantity",
+                    "type"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of the 'product' or 'action'",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "quantity": {
+                        "title": "quantity",
+                        "description": "Quantity of the 'product' or 'action'",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 3
+                    },
+                    "type": {
+                        "title": "Type",
+                        "description": "Type of request 'product' or 'action'",
+                        "type": "string",
+                        "format": "string",
+                        "example": "action"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreOrderRequest": {
+                "title": "Order",
+                "description": "Order model",
+                "properties": {
+                    "address": {
+                        "title": "address",
+                        "description": "address",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Ahunbaeva,Mira"
+                    },
+                    "phone": {
+                        "title": "phone",
+                        "description": "Phone number",
+                        "type": "string",
+                        "format": "string",
+                        "example": "0777152350"
+                    },
+                    "products": {
+                        "title": "Products",
+                        "description": "Products wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderProductRequest"
+                        }
+                    },
+                    "actions": {
+                        "title": "Actions",
+                        "description": "Actions wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderActionRequest"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Order"
+                }
+            }
+        },
+        "securitySchemes": {
+            "X-APP-ID": {
+                "type": "apiKey",
+                "name": "X-APP-ID",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Products",
+            "description": "Products list"
+        },
+        {
+            "name": "Actions",
+            "description": "Actions list"
+        },
+        {
+            "name": "Categories",
+            "description": "Categories list"
+        },
+        {
+            "name": "Orders",
+            "description": "Orders list"
+        },
+        {
+            "name": "Banners",
+            "description": "Banners list"
+        },
+        {
+            "name": "Cart",
+            "description": "Cart list"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
